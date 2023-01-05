@@ -1,5 +1,6 @@
 package sg.nus.iss.apiDarryl.apiDarryl.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import sg.nus.iss.apiDarryl.apiDarryl.Model.Category;
 import sg.nus.iss.apiDarryl.apiDarryl.service.CategoryService;
@@ -30,7 +32,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @Operation(summary="Get categories", description = "Provides all available category list")
-    @ApiResponse(values = {
+    @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
         @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}", 
             content ={
@@ -49,7 +51,7 @@ public class CategoryController {
             List<Category> categories = new ArrayList<Category>();
             categories = categoryService.getCategoryList();
             if(categories.isEmpty()){
-                return new ResponseEntity<>(HttpaStatus.NO_CONTENT);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(categories, HttpStatus.OK);
         }
